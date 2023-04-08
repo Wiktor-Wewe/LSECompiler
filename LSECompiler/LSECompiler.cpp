@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Compiler.h"
 
-bool isNameWes(std::string name) {
+bool isNameWes1(std::string name) {
     if (name.size() > 4) {
         if (name[name.size() - 1] == 's' &&
             name[name.size() - 2] == 'e' &&
@@ -15,7 +15,7 @@ bool isNameWes(std::string name) {
     return false;
 }
 
-bool isNameWes(std::string name) {
+bool isNameWes2(std::string name) {
     return name.substr(name.size() - 4) == ".wes";
 }
 
@@ -45,9 +45,15 @@ int main(int argc, char* argv[])
         compile(argv[2]);
     }
 
-    else if (isNameWes(argv[1])) {
+    else if (isNameWes2(argv[1])) {
         compile(argv[1]);
     }
+
+    else {
+        std::cout << "unknown file format!" << std::endl;
+        return 1;
+    }
+
 
     return 0;
 }
