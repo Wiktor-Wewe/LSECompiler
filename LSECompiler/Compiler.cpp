@@ -981,7 +981,7 @@ void Compiler::_writeCompilationInfo(std::fstream* file)
 
 void Compiler::_overwriteSizeOfFile(std::fstream* file)
 {
-    int sizeOfFile = file->tellp();
+    uint32_t sizeOfFile = file->tellp();
     file->seekp(0x14);
-    file->write(reinterpret_cast<const char*>(&sizeOfFile), sizeof(int));
+    file->write(reinterpret_cast<const char*>(&sizeOfFile), sizeof(uint32_t));
 }
