@@ -54,6 +54,6 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-
+    // dodac for po args -> if args >= 2 -> if args[i] == "-d" -> show debug info
     return 0;
 }
