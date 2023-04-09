@@ -817,7 +817,7 @@ void Compiler::_writeMessages(std::fstream* file)
 
         for (int j = 0; j < this->_Messages[i].getAllMusicId().size(); j++) {
             buff = this->_Messages[i].getAllMusicId()[j];
-            file->write(reinterpret_cast<const char*>(buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
         }
 
         // write number of sfx id and all sfx id
@@ -970,7 +970,7 @@ void Compiler::_writeCompilationInfo(std::fstream* file)
     }
 
     // write compilator and engine info
-    std::string compilatorAndEngineInfo = "Compilator: 1.0v, Engine: 1.0v, Developer Test";
+    std::string compilatorAndEngineInfo = "Compiler: 1.1v, Engine: 1.1v, Developer Test";
     file->write(compilatorAndEngineInfo.c_str(), compilatorAndEngineInfo.size());
     file->write(reinterpret_cast<char*>(&br), sizeof(br));
 
