@@ -567,9 +567,7 @@ void Compiler::_writeCharacters(std::fstream* file)
         // write number of spirites
         buff = this->_Characters[i].getSprites().size();
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
-        // write number of all paths and paths
-        buff = this->_Characters[i].getSprites().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
+        // write all paths and paths
         for (int j = 0; j < this->_Characters[i].getSprites().size(); j++) {
             buff = this->_Characters[i].getSprites()[j];
             file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
@@ -677,7 +675,7 @@ void Compiler::_writeEvents(std::fstream* file)
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write show
-        buff = this->_Events[i].getCcei();
+        buff = this->_Events[i].isShowed();
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
     }
 }
