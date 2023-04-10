@@ -523,7 +523,7 @@ std::string Compiler::_makeNewName(std::string fileName)
 
 void Compiler::_writeFileInfo(std::fstream* file)
 {
-    uint8_t ffff = 0xffff;
+    uint16_t ffff = 0xffff;
     uint32_t sizeOfName = this->_name.size();
     uint32_t sizeOfInfo = this->_info.size();
     uint32_t sizeOfAuthor = this->_author.size();
@@ -541,187 +541,187 @@ void Compiler::_writeFileInfo(std::fstream* file)
     file->write(reinterpret_cast<const char*>(&sizeOfDate), sizeof(uint32_t));
     file->write(this->_date.c_str(), this->_date.size());
 
-    file->write(reinterpret_cast<const char*>(&ffff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&ffff), sizeof(uint16_t));
 }
 
 void Compiler::_writeCharacters(std::fstream* file)
 {
-    uint8_t characterHeader = 0x0001;
-    uint8_t numberOfCharacters = this->_Characters.size();
-    uint8_t buff;
+    uint16_t characterHeader = 0x0001;
+    uint16_t numberOfCharacters = this->_Characters.size();
+    uint16_t buff;
 
     // write characters header
-    file->write(reinterpret_cast<const char*>(&characterHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&characterHeader), sizeof(uint16_t));
 
     // write number of characters
-    file->write(reinterpret_cast<const char*>(&numberOfCharacters), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfCharacters), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Characters.size(); i++) {
         // write id
         buff = this->_Characters[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         // write size of name and name
         buff = this->_Characters[i].getName().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Characters[i].getName().c_str(), this->_Characters[i].getName().size());
         // write number of spirites
         buff = this->_Characters[i].getSprites().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         // write number of all paths and paths
         buff = this->_Characters[i].getSprites().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         for (int j = 0; j < this->_Characters[i].getSprites().size(); j++) {
             buff = this->_Characters[i].getSprites()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
     }
 }
 
 void Compiler::_writeCCE(std::fstream* file)
 {
-    uint8_t CCEHeader = 0x0002;
-    uint8_t numberOfCCE = this->_CCEvents.size();
-    uint8_t buff;
+    uint16_t CCEHeader = 0x0002;
+    uint16_t numberOfCCE = this->_CCEvents.size();
+    uint16_t buff;
 
     // write cce header
-    file->write(reinterpret_cast<const char*>(&CCEHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&CCEHeader), sizeof(uint16_t));
 
     // write number of cce
-    file->write(reinterpret_cast<const char*>(&numberOfCCE), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfCCE), sizeof(uint16_t));
 
     for (int i = 0; i < this->_CCEvents.size(); i++) {
         // write id
         buff = this->_CCEvents[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         // write size of text and text
         buff = this->_CCEvents[i].getText().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_CCEvents[i].getText().c_str(), this->_CCEvents[i].getText().size());
         // write number of vectors y
         buff = this->_CCEvents[i].getClothes().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         // write info from vectors y
         for (int j = 0; j < this->_CCEvents[i].getClothes().size(); j++) {
             // write number of vectors x
             buff = this->_CCEvents[i].getClothes()[j].size();
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
             // write info from vectors x
             for (int k = 0; k < this->_CCEvents[i].getClothes()[j].size(); k++) {
                 buff = this->_CCEvents[i].getClothes()[j][k];
-                file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+                file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
             }
         }
         // write next message id
         buff = this->_CCEvents[i].getNextMessageId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
     }
 }
 
 void Compiler::_writeEvents(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0003;
-    uint8_t numberOfEvents = this->_Events.size();
-    uint8_t buff;
+    uint16_t EventHeader = 0x0003;
+    uint16_t numberOfEvents = this->_Events.size();
+    uint16_t buff;
 
     // write events header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write number of events
-    file->write(reinterpret_cast<const char*>(&numberOfEvents), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfEvents), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Events.size(); i++) {
         // write id
         buff = this->_Events[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write number of player options
         buff = this->_Events[i].getPlayerOptions().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write all player options
         for (int j = 0; j < this->_Events[i].getPlayerOptions().size(); j++) {
             // write size of player option and player option
             buff = this->_Events[i].getPlayerOptions()[j].size();
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
             file->write(this->_Events[i].getPlayerOptions()[j].c_str(), this->_Events[i].getPlayerOptions()[j].size());
         }
 
         // write number of next messages
         buff = this->_Events[i].getNextMessages().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write all next messages
         for (int j = 0; j < this->_Events[i].getNextMessages().size(); j++) {
             // write next message id
             buff = this->_Events[i].getNextMessages()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
 
         // write number of next events
         buff = this->_Events[i].getNextEvents().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write all next events
         for (int j = 0; j < this->_Events[i].getNextEvents().size(); j++) {
             // write next event id
             buff = this->_Events[i].getNextEvents()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
 
         // write mpei
         buff = this->_Events[i].getMpei();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write ccei
         buff = this->_Events[i].getCcei();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write show
         buff = this->_Events[i].getCcei();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
     }
 }
 
 void Compiler::_writeImages(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0004;
-    uint8_t numberOfImages = this->_Images.size();
-    uint8_t buff;
+    uint16_t EventHeader = 0x0004;
+    uint16_t numberOfImages = this->_Images.size();
+    uint16_t buff;
 
     // write images header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write number of events
-    file->write(reinterpret_cast<const char*>(&numberOfImages), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfImages), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Images.size(); i++) {
         // write id
         buff = this->_Images[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // size of name and name
         buff = this->_Images[i].getName().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Images[i].getName().c_str(), this->_Images[i].getName().size());
 
         // size of path and path
         buff = this->_Images[i].getPath().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Images[i].getPath().c_str(), this->_Images[i].getPath().size());
     }
 }
 
 void Compiler::_writeMPE(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0005;
-    uint8_t buff;
+    uint16_t EventHeader = 0x0005;
+    uint16_t buff;
 
     // write MPE header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write size of name and name
     buff = this->_MPEvent->getName().size();
-    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
     file->write(this->_MPEvent->getName().c_str(), this->_MPEvent->getName().size());
 
     // write size of text and text
@@ -731,200 +731,200 @@ void Compiler::_writeMPE(std::fstream* file)
 
     // write size of faces vector Y
     buff = this->_MPEvent->getFaces().size();
-    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
     // write content of faces vector Y 
     for (int i = 0; i < this->_MPEvent->getFaces().size(); i++) {
         // write size of faces vector X
         buff = this->_MPEvent->getFaces()[i].size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write content of faces vector X
         for (int j = 0; j < this->_MPEvent->getFaces()[i].size(); j++) {
             buff = this->_MPEvent->getFaces()[i][j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
     }
 
     // write size of skins vector Y
     buff = this->_MPEvent->getSkins().size();
-    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
     // write content of skins vector Y 
     for (int i = 0; i < this->_MPEvent->getSkins().size(); i++) {
         // write size of skins vector X
         buff = this->_MPEvent->getSkins()[i].size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write content of skins vector X
         for (int j = 0; j < this->_MPEvent->getSkins()[i].size(); j++) {
             buff = this->_MPEvent->getSkins()[i][j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
     }
 
     // write size of hairs vector Y
     buff = this->_MPEvent->getHairs().size();
-    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
     // write content of hairs vector Y 
     for (int i = 0; i < this->_MPEvent->getHairs().size(); i++) {
         // write size of hairs vector X
         buff = this->_MPEvent->getHairs()[i].size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write content of hairs vector X
         for (int j = 0; j < this->_MPEvent->getHairs()[i].size(); j++) {
             buff = this->_MPEvent->getHairs()[i][j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
     }
 
     // write next message id
     buff = this->_MPEvent->getNextMessageId();
-    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 }
 
 void Compiler::_writeMessages(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0006;
-    uint8_t numberOfMessages = this->_Messages.size();
-    uint8_t buff;
+    uint16_t EventHeader = 0x0006;
+    uint16_t numberOfMessages = this->_Messages.size();
+    uint16_t buff;
 
     // write messages header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write number of messages
-    file->write(reinterpret_cast<const char*>(&numberOfMessages), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfMessages), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Messages.size(); i++) {
         // write id
         buff = this->_Messages[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write character id
         buff = this->_Messages[i].getCharacterId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write size of text and text
         buff = this->_Messages[i].getText().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Messages[i].getText().c_str(), this->_Messages[i].getText().size());
 
         // write number of music id and all music id
         buff = this->_Messages[i].getAllMusicId().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         for (int j = 0; j < this->_Messages[i].getAllMusicId().size(); j++) {
             buff = this->_Messages[i].getAllMusicId()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
 
         // write number of sfx id and all sfx id
         buff = this->_Messages[i].getAllSfxId().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         for (int j = 0; j < this->_Messages[i].getAllSfxId().size(); j++) {
             buff = this->_Messages[i].getAllSfxId()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         }
 
         // write sprite id
         buff = this->_Messages[i].getSpriteId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write animation id
         buff = this->_Messages[i].getAnimationId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write clothes id
         buff = this->_Messages[i].getClothesId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write bg image id
         buff = this->_Messages[i].getBgImageId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write next message id
         buff = this->_Messages[i].getNextMessage();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write next event id
         buff = this->_Messages[i].getNextEvent();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write message x
         buff = this->_Messages[i].getMessageX();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write message y
         buff = this->_Messages[i].getMessageY();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write character x
         buff = this->_Messages[i].getCharacterX();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write character y
         buff = this->_Messages[i].getCharacterY();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
     }
 }
 
 void Compiler::_writeMusics(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0007;
-    uint8_t numberOfMusics = this->_Musics.size();
-    uint8_t buff;
+    uint16_t EventHeader = 0x0007;
+    uint16_t numberOfMusics = this->_Musics.size();
+    uint16_t buff;
 
     // write musics header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write number of musics
-    file->write(reinterpret_cast<const char*>(&numberOfMusics), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfMusics), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Musics.size(); i++) {
         // write id
         buff = this->_Musics[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write size of name and name
         buff = this->_Musics[i].getName().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Musics[i].getName().c_str(), this->_Musics[i].getName().size());
 
         // write size of path and path
         buff = this->_Musics[i].getPath().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Musics[i].getPath().c_str(), this->_Musics[i].getPath().size());
     }
 }
 
 void Compiler::_writeSfx(std::fstream* file)
 {
-    uint8_t EventHeader = 0x0008;
-    uint8_t numberOfSfx = this->_Sfxs.size();
-    uint8_t buff;
+    uint16_t EventHeader = 0x0008;
+    uint16_t numberOfSfx = this->_Sfxs.size();
+    uint16_t buff;
 
     // write musics header
-    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&EventHeader), sizeof(uint16_t));
 
     // write number of musics
-    file->write(reinterpret_cast<const char*>(&numberOfSfx), sizeof(uint8_t));
+    file->write(reinterpret_cast<const char*>(&numberOfSfx), sizeof(uint16_t));
 
     for (int i = 0; i < this->_Sfxs.size(); i++) {
         // write id
         buff = this->_Sfxs[i].getId();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
 
         // write size of name and name
         buff = this->_Sfxs[i].getName().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Sfxs[i].getName().c_str(), this->_Sfxs[i].getName().size());
 
         // write size of path and path
         buff = this->_Sfxs[i].getPath().size();
-        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint8_t));
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Sfxs[i].getPath().c_str(), this->_Sfxs[i].getPath().size());
     }
 }
