@@ -259,6 +259,7 @@ void Compiler::_loadMessage(std::fstream* file)
     int messageY;
     int characterX;
     int characterY;
+    std::vector<int> showCharacters;
 
     std::getline(*file, line);
     id = this->_readId(line);
@@ -305,9 +306,12 @@ void Compiler::_loadMessage(std::fstream* file)
     std::getline(*file, line);
     characterY = this->_readId(line);
 
+    std::getline(*file, line);
+    showCharacters = this->_readVectorInt(line);
+
     this->_Messages.push_back(Message(id, characterid, text, musicid, sfxid, 
         spriteid, animationid, clothesid, bgimageid, nextmessage, nextevent, 
-        messageX, messageY, characterX, characterY));
+        messageX, messageY, characterX, characterY, showCharacters));
 }
 
 void Compiler::_loadMusic(std::fstream* file)
@@ -866,6 +870,15 @@ void Compiler::_writeMessages(std::fstream* file)
         // write character y
         buff = this->_Messages[i].getCharacterY();
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
+
+        // write number of show characters id and all show characters id
+        buff = this->_Messages[i].getShowCharacters().size();
+        file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
+
+        for (int j = 0; j < this->_Messages[i].getShowCharacters().size(); j++) {
+            buff = this->_Messages[i].getShowCharacters()[j];
+            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
+        }
     }
 }
 
