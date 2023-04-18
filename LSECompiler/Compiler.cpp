@@ -247,7 +247,7 @@ void Compiler::_loadMessage(std::fstream* file)
     int id;
     int characterid;
     std::string text;
-    std::vector<int> musicid;
+    int musicid;
     std::vector<int> sfxid;
     int spriteid;
     int animationid;
@@ -271,7 +271,7 @@ void Compiler::_loadMessage(std::fstream* file)
     text = this->_readText(line);
 
     std::getline(*file, line);
-    musicid = this->_readVectorInt(line);
+    musicid = this->_readId(line);
 
     std::getline(*file, line);
     sfxid = this->_readVectorInt(line);
@@ -813,14 +813,9 @@ void Compiler::_writeMessages(std::fstream* file)
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
         file->write(this->_Messages[i].getText().c_str(), this->_Messages[i].getText().size());
 
-        // write number of music id and all music id
-        buff = this->_Messages[i].getAllMusicId().size();
+        // write music id
+        buff = this->_Messages[i].getMusicId();
         file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
-
-        for (int j = 0; j < this->_Messages[i].getAllMusicId().size(); j++) {
-            buff = this->_Messages[i].getAllMusicId()[j];
-            file->write(reinterpret_cast<const char*>(&buff), sizeof(uint16_t));
-        }
 
         // write number of sfx id and all sfx id
         buff = this->_Messages[i].getAllSfxId().size();
